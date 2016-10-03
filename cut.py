@@ -4,37 +4,33 @@ import sys
 import pdb
 
 
-def is_chinese(s):
-    if ord(s) < 256:
-        return False
-    elif str(s).decode("utf-8") >= u'\u4e00' and str(s).decode("utf-8") <= u'\u9fa5':
-        return True
-    else:
-        return False
+def is_ascii(s):
+    return all(ord(c) < 256 for c in s)
 
-def readNcut(filename):
-    content = open(filename, 'rb').read()
+def readNcut(inputfile,outputfile):
+    content = open(inputfile, 'r').read()
 
-    replaceList = []
-    for line in content:
-        for item in line:
-            print item
-            if not is_chinese(item) and item not in replaceList:
-                content.replace(item,'')
-                replaceList.append(item)
+    rough_words = jieba.cut(content, cut_all=False)
 
-    words = jieba.cut(content, cut_all=False)
-
+    words = []
     print "Output 精確模式 Full Mode："
-    for word in words:
-        print word
+    for word in rough_words:
+        if not is_ascii(word):
+            print word
+            words.append(word)
+    
+    f = open(outputfile, 'w')
+    f.write(str(words))
+    pdb.set_trace()
+    f.close()
 
 if __name__ == "__main__":
     jieba.set_dictionary('dict.txt.big')
     #jieba.load_userdict("userdict.txt")
-    try:
-        filename = sys.argv[1]
-    except:
-        print "Usage: python cut.py filetocut.txt"
+    if len(sys.argv) == 3:
+        inputfile = sys.argv[1]
+        outputfile = sys.argv[2]
+    else:
+        print "Usage: python cut.py filetoCut.txt cuttedFile.txt"
         sys.exit()
-    readNcut(filename)
+    readNcut(inputfile,outputfile)
