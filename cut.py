@@ -8,23 +8,31 @@ def is_ascii(s):
     return all(ord(c) < 256 for c in s)
 
 def readNcut(inputfile,outputfile):
-    content = open(inputfile, 'r').read()
+    content = open(inputfile, 'r').read().split('\n')
+    
+    rough_news = []
+    for passage in content:
+        rough_news.append(jieba.cut(passage, cut_all=False))
 
-    rough_words = jieba.cut(content, cut_all=False)
-
-    words = []
+    news = []
     print "Output 精確模式 Full Mode："
-    for word in rough_words:
-        if not is_ascii(word):
-            print word
-            words.append(word)
+    for passages in rough_news:
+        words = []
+        for word in passages:
+            if not is_ascii(word):
+                print word
+                words.append(word)
+        news.append(words)
     
     f = open(outputfile, 'w')
-    f.write(str(words))
-    pdb.set_trace()
+    for passages in news:
+        for words in passages:
+            f.write(words.encode("utf-8"))
+            f.write(" ")
+        f.write('\n')
     f.close()
 
-if __name__ == "__main__":
+def cut_main():
     jieba.set_dictionary('dict.txt.big')
     #jieba.load_userdict("userdict.txt")
     if len(sys.argv) == 3:
@@ -34,3 +42,6 @@ if __name__ == "__main__":
         print "Usage: python cut.py filetoCut.txt cuttedFile.txt"
         sys.exit()
     readNcut(inputfile,outputfile)
+
+if __name__ == "__main__":
+    cut_main()
