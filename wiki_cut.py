@@ -3,6 +3,7 @@ import jieba
 import sys
 import pdb
 
+
 def is_ascii(s):
     return all(ord(c) < 256 for c in s)
 
@@ -19,6 +20,7 @@ def readNcut(inputfile,outputfile):
         words = []
         for word in passages:
             if not is_ascii(word):
+                print word
                 words.append(word)
         news.append(words)
     
@@ -30,17 +32,16 @@ def readNcut(inputfile,outputfile):
         f.write('\n')
     f.close()
 
-def cut_main(inputfile,outputfile):
+def cut_main():
     jieba.set_dictionary('dict.txt.big')
-    #-----user define dict-----
     #jieba.load_userdict("userdict.txt")
-    readNcut(inputfile,outputfile)
-
-if __name__ == "__main__":
     if len(sys.argv) == 3:
         inputfile = sys.argv[1]
         outputfile = sys.argv[2]
     else:
         print "Usage: python cut.py filetoCut.txt cuttedFile.txt"
         sys.exit()
-    cut_main(inputfile,outputfile)
+    readNcut(inputfile,outputfile)
+
+if __name__ == "__main__":
+    cut_main()
