@@ -14,7 +14,6 @@ def crawlNCut(interval):
         print "--------------------------------"
         print "Now Sleep for ",interval," mins."
         print "--------------------------------"
-        pdb.set_trace()
         time.sleep(int(interval)*60)
 
 def auto_main():
