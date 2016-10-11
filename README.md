@@ -1,5 +1,5 @@
 # zhDataCrawler
-# 中文 新聞（語料） 爬蟲
+# 中文 新聞(語料) 爬蟲
 
 An crawler that will assess chinese news from Google's headline with customizable intervals.
 #### Important Notice:
