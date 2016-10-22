@@ -4,7 +4,7 @@ import sys
 import pdb
 
 def is_ascii(s):
-    return all(ord(c) < 256 for c in s)
+    return all( ord(c)<256 for c in s)
 
 def readNcut(inputfile,outputfile):
     content = open(inputfile, 'r').read().split('\n')
