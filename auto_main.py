@@ -10,7 +10,8 @@ from cut import cut_main
 
 def checkNrun(runList):
     nowhour = int( str(datetime.datetime.now())[11:13] )
-    print "Crawling data of",nowhour,"o'clock"
+    print str(datetime.datetime.now())
+    print "Crawling data on",nowhour,"o'clock"
     if nowhour in runList:
         runList.remove(nowhour)
         crawlNCut()
@@ -38,7 +39,7 @@ def auto_main():
         sys.exit()
     runList = [int(num) for num in userList.split('[')[1].split(']')[0].split(',')]
     while 1:
-        if len(runList) == 0: runList = userList
+        if len(runList) == 0: runList = [int(num) for num in userList.split('[')[1].split(']')[0].split(',')]
         checkNrun(runList)
 
 if __name__ == "__main__":

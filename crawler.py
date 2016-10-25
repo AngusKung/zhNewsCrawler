@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 def googleNewsCrawler():
     filename = "google_news/{:%Y-%m-%d %H.%M.%S}.txt".format(datetime.datetime.now())
 
-    res = requests.get("https://news.google.com")
+    res = requests.get("https://news.google.com.tw")
     soup = BeautifulSoup(res.text, "html.parser")
     #print soup.select(".esc-body")
 
